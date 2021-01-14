@@ -48,7 +48,7 @@ app.post('/login', (req, res) => {
     const username = req.body.username;
     // make a payload object (here its just username)
     const user = {name: username};
-    // encrypte the whole thing with the super secret password
+    // encrypt the whole thing with the super secret password
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
     
     // return the access token to client (where it can be picked up and stored)
@@ -58,18 +58,23 @@ app.post('/login', (req, res) => {
 
 
   
-
+// middleware functon to authorize token
 function authenticateToken(req,res,next){
+    // look in the autorization part of the httprequest header
     const authHeader = req.headers['authorization']
+    // dig out the token
     const token = authHeader && authHeader.split(' ')[1]
+    // check if there is a token
     if(token == null){
         return res.sendStatus(401)
     }
-
+    
+    // verify the token and dig out the payload (just user i this case)
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user)=> {
         if(err){
          return res.sendStatus(403)
         }
+        // set user on the req obj = user from token and pass on with next
         req.user = user
         next()
     })    
