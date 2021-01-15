@@ -1,5 +1,9 @@
 const router = require('express').Router();
 const { User, Book, Vote, Comment } = require('../../models');
+const jwt = require('jsonwebtoken');
+const { response } = require('express');
+const tokenAuth = require("../../utils/auth");
+
 
 // get all users
 router.get('/', (req, res) => {
@@ -79,7 +83,10 @@ router.post('/', (req, res) => {
 
 // post route log in an existing user 
 router.post('/login', (req, res) => {
-  // expects {email: 'str@str.str', password: 'str'}
+// expects {email: 'str@str.str', password: 'str'}
+
+ 
+
   User.findOne({
     where: {
       email: req.body.email
@@ -90,7 +97,7 @@ router.post('/login', (req, res) => {
       return;
     }
 
-
+    
     // check the password with the function in models/User
     const validPassword = dbUserData.checkPassword(req.body.password);
 
@@ -99,28 +106,43 @@ router.post('/login', (req, res) => {
       return;
     }
 
-    // get a token 
-    req.token = "super secredt"
-    console.log(req.token)
+    // Dig out the data we want from the dbUserData returned from the DB
+    const userdata = {
+        user_id: dbUserData.id,
+        username: dbUserData.username,
+        user_email: dbUserData.email
+    } 
+
     
 
+    // Generate a jsonwebtoken with userdata as payload
+    const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
+    
+
+
+    // stuff the token in the req obj.
+    req.token = accessToken
+    
+    
     //req.session.save(()=>{
     //  req.session.user_id = dbUserData.id;
     //  req.session.username = dbUserData.username;
     //  req.session.loggedIn = true;
-
-      res.json({ user: dbUserData, message: 'You are now logged in!' });
-      //res.redirect('/');
-      
-
+    //res.redirect('/');
     //});
+    res.json({message: 'You are now logged in!', accessToken:accessToken });
+      
+    
+ 
   });
 });
 
-/*
 
+
+
+// Update user infomation on the server    
 router.put('/:id', (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
+  // expects {username: <str>, email: <str>, password: <str>}
 
   // pass in req.body instead to only update what's passed through
   User.update(req.body, {
@@ -142,6 +164,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+// Delete a user
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
@@ -161,6 +184,7 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+/*
 router.post('/logout', (req,res)=>{
   if(req.session.loggedIn) {
     req.session.destroy(()=>{
@@ -171,6 +195,6 @@ router.post('/logout', (req,res)=>{
     res.status(404).end();
   }
 })
-
 */
+
 module.exports = router;
