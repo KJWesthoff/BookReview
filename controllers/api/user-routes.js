@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// Get a User by id
 router.get('/:id', (req, res) => {
   User.findOne({
     attributes: { exclude: ['password'] },
@@ -51,6 +52,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
+
+// Create a new user
 router.post('/', (req, res) => {
   // expects {username: <str>, email:<str> , password:<str> }
   User.create({
@@ -73,7 +76,9 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/signin', (req, res) => {
+
+// post route log in an existing user 
+router.post('/login', (req, res) => {
   // expects {email: 'str@str.str', password: 'str'}
   User.findOne({
     where: {
@@ -85,6 +90,8 @@ router.post('/signin', (req, res) => {
       return;
     }
 
+
+    // check the password with the function in models/User
     const validPassword = dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
@@ -92,16 +99,21 @@ router.post('/signin', (req, res) => {
       return;
     }
 
-    req.session.save(()=>{
-      req.session.user_id = dbUserData.id;
-      req.session.username = dbUserData.username;
-      req.session.loggedIn = true;
+    // get a token 
+    req.token = "super secredt"
+    console.log(req.token)
+    
+
+    //req.session.save(()=>{
+    //  req.session.user_id = dbUserData.id;
+    //  req.session.username = dbUserData.username;
+    //  req.session.loggedIn = true;
 
       res.json({ user: dbUserData, message: 'You are now logged in!' });
-      res.redirect('/');
+      //res.redirect('/');
       
 
-    });
+    //});
   });
 });
 
