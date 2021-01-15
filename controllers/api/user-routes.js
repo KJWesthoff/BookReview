@@ -66,13 +66,31 @@ router.post('/', (req, res) => {
     password: req.body.password
   })
     .then(dbUserData => {
-      req.session.save(() => {
-        req.session.user_id = dbUserData.id;
-        req.session.username = dbUserData.username;
-        req.session.loggedIn = true;
-    
-        res.json(dbUserData);
-      });
+
+
+        // Dig out the data we want from the dbUserData returned from the DB
+        const userdata = {
+        user_id: dbUserData.id,
+        username: dbUserData.username,
+        user_email: dbUserData.email
+        } 
+
+
+
+        // Generate a jsonwebtoken with userdata as payload
+        const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
+        
+        res.json({message: 'You are now added as user!', accessToken:accessToken });
+
+        /*  
+        req.session.save(() => {
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+        
+            res.json(dbUserData);
+        });
+        */
     })
     .catch(err => {
       console.log(err);
