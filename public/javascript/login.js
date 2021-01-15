@@ -11,7 +11,7 @@ async function loginFormHandler(event) {
   const password = document.querySelector('#password-login').value.trim();
   
   if (email && password) {
-    const response = await fetch('/login', {
+    const response = await fetch('/api/users/login', {
       method: 'post',
       body: JSON.stringify({
         email,
@@ -25,9 +25,8 @@ async function loginFormHandler(event) {
         
       let data = await response.json();
       let accessToken = await data.accessToken
-      //console.log(accessToken)
-        // Store the token in local storage
-      
+        
+      // Store the token in local storage for later use
       localStorage.setItem('savedAccesToken', accessToken)
 
       
