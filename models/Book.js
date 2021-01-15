@@ -15,6 +15,7 @@ class Book extends Model {
           'id',
         //   'book_url',
           'title',
+          'author',
           'created_at',
           [
             sequelize.literal('(SELECT COUNT(*) FROM vote WHERE book.id = vote.book_id)'),
@@ -48,6 +49,10 @@ Book.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    author:{
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     // book_url: {
     //   type: DataTypes.STRING,
