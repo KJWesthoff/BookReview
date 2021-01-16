@@ -82,7 +82,7 @@ router.post('/', (req, res) => {
         
         res.json({message: 'You are now added as user!', accessToken:accessToken });
 
-        /*  
+        /*  // cookie version
         req.session.save(() => {
             req.session.user_id = dbUserData.id;
             req.session.username = dbUserData.username;
@@ -135,11 +135,7 @@ router.post('/login', (req, res) => {
     const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
     
 
-
-    // stuff the token in the req obj.
-    req.token = accessToken
-    
-    
+    // cookie version
     //req.session.save(()=>{
     //  req.session.user_id = dbUserData.id;
     //  req.session.username = dbUserData.username;
@@ -148,6 +144,7 @@ router.post('/login', (req, res) => {
     //});
 
     // Return the webtoken to client
+    
     res.json({message: 'You are now logged in!', accessToken:accessToken });
       
     
@@ -159,9 +156,15 @@ router.post('/login', (req, res) => {
 
 
 // Update user infomation on the server    
-router.put('/:id', (req, res) => {
+router.put('/:id', tokenAuth, (req, res) => {
   // expects {username: <str>, email: <str>, password: <str>}
-
+  
+  // cehck if user login email is the same as the token
+  if(req.user_email != req.body.user_email){
+    res.status(406).json({ message: 'You can only change your own account'});
+    return;
+  }  
+  
   // pass in req.body instead to only update what's passed through
   User.update(req.body, {
     individualHooks: true,
@@ -181,6 +184,11 @@ router.put('/:id', (req, res) => {
       res.status(500).json(err);
     });
 });
+
+
+
+
+
 
 // Delete a user
 router.delete('/:id', (req, res) => {

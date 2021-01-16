@@ -44,15 +44,14 @@ async function checkFormHandler(event) {
   event.preventDefault();
 
   //console.log( 'Bearer ' + localStorage.getItem('savedAccesToken'));
-  response = await fetch('/books', {
+  response = await fetch('/api/books/auth', {
     method:'get',
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('savedAccesToken')}
   })
 
   
-
-
   console.log(await response.json())
+  
 
 }
 
