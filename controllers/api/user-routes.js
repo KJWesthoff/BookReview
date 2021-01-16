@@ -131,8 +131,6 @@ router.post('/login', (req, res) => {
         user_email: dbUserData.email
     } 
 
-    
-
     // Generate a jsonwebtoken with userdata as payload
     const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
     
@@ -148,6 +146,8 @@ router.post('/login', (req, res) => {
     //  req.session.loggedIn = true;
     //res.redirect('/');
     //});
+
+    // Return the webtoken to client
     res.json({message: 'You are now logged in!', accessToken:accessToken });
       
     
