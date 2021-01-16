@@ -3,9 +3,9 @@ const exphbs = require('express-handlebars');
 const path = require('path'); // for stitching together paths
 const sequelize = require('./config/connection');
 const controllers = require('./controllers');
-const session = require('express-session');
+//const session = require('express-session');
 
-//const jwt = require('jsonwebtoken');
+
 
 
 // server configuration
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(controllers);
-app.use(session);
+//app.use(session);
 
 // launch SQL server and app server
 sequelize.sync({ force: false }).then(() => {
