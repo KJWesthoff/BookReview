@@ -22,6 +22,9 @@ function tokenAuth (req,res,next){
         
         // set user on the req obj = user from token and pass on with next
         req.username = payload.username;
+        req.user_id = payload.user_id;
+        req.user_email = payload.user_email;
+        
         next()
     })    
 
