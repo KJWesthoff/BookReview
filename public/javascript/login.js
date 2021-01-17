@@ -38,6 +38,16 @@ async function loginFormHandler(event) {
   
 }
 
+// Handler for the login option
+async function logoutFormHandler(event) {
+  event.preventDefault();
+  // Remove the token from local storage
+  localStorage.removeItem('savedAccesToken');
+  
+}
+
+
+
 
 // Test function to test token login
 async function checkFormHandler(event) {
