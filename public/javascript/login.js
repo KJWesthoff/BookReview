@@ -38,11 +38,27 @@ async function loginFormHandler(event) {
   
 }
 
+// Handler for the login option
+async function logoutFormHandler(event) {
+  event.preventDefault();
+  // Remove the token from local storage
+  localStorage.removeItem('savedAccesToken');
+  
+}
+
+
+
 
 // Test function to test token login
 async function checkFormHandler(event) {
   event.preventDefault();
 
+  // handle the case where there is no token (user logged)
+  if(!localStorage.getItem('savedAccesToken')){
+    console.log("No token")
+    return;
+
+  }
   //console.log( 'Bearer ' + localStorage.getItem('savedAccesToken'));
   response = await fetch('/api/books/auth', {
     method:'get',
@@ -59,4 +75,5 @@ async function checkFormHandler(event) {
 
 
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+document.querySelector('.logout-form').addEventListener('submit', logoutFormHandler);
 document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
