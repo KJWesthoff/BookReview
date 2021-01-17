@@ -2,6 +2,54 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { Book, User, Vote, Comment } = require('../../models');
 
+const tokenAuth = require("../../utils/auth");
+
+// get all Books with authorization
+router.get('/auth', tokenAuth, (req, res) => {
+  //console.log('======================');
+  Book.findAll({
+    attributes: [
+      'id',
+      'title',
+      'author',
+      'created_at',
+    ],
+    order: [['created_at', 'DESC']],
+    include: [
+        {
+            model: Comment,
+            attributes: ['id', 'comment_text', 'book_id', 'user_id', 'created_at'],
+            include: {
+              model: User,
+              attributes: ['username']
+            }
+        },
+      
+      {
+        model: User,
+        attributes: ['username']
+      }
+    ]
+  })
+    .then(dbPostData => {
+
+      res.json(dbPostData)
+    
+      //res.header( "authorization", "Bearer " + localStorage.getItem('savedAccesToken'));
+      //res.redirect("/homepage", {books:(dbPostData)})
+      //res.json(dbPostData)
+    
+    
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+
+
+
 // get all Books
 router.get('/', (req, res) => {
   //console.log('======================');

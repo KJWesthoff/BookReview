@@ -11,7 +11,7 @@ async function loginFormHandler(event) {
   const password = document.querySelector('#password-login').value.trim();
   
   if (email && password) {
-    const response = await fetch('/login', {
+    const response = await fetch('/api/users/login', {
       method: 'post',
       body: JSON.stringify({
         email,
@@ -25,9 +25,8 @@ async function loginFormHandler(event) {
         
       let data = await response.json();
       let accessToken = await data.accessToken
-      //console.log(accessToken)
-        // Store the token in local storage
-      
+        
+      // Store the token in local storage for later use
       localStorage.setItem('savedAccesToken', accessToken)
 
       
@@ -39,21 +38,36 @@ async function loginFormHandler(event) {
   
 }
 
+// Handler for the login option
+async function logoutFormHandler(event) {
+  event.preventDefault();
+  // Remove the token from local storage
+  localStorage.removeItem('savedAccesToken');
+  
+}
+
+
+
 
 // Test function to test token login
 async function checkFormHandler(event) {
   event.preventDefault();
 
+  // handle the case where there is no token (user logged)
+  if(!localStorage.getItem('savedAccesToken')){
+    console.log("No token")
+    return;
+
+  }
   //console.log( 'Bearer ' + localStorage.getItem('savedAccesToken'));
-  response = await fetch('/books', {
+  response = await fetch('/api/books/auth', {
     method:'get',
     headers: {'Authorization': 'Bearer ' + localStorage.getItem('savedAccesToken')}
   })
 
   
-
-
   console.log(await response.json())
+  
 
 }
 
@@ -61,4 +75,5 @@ async function checkFormHandler(event) {
 
 
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+document.querySelector('.logout-form').addEventListener('submit', logoutFormHandler);
 document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
