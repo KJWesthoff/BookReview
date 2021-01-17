@@ -31,7 +31,16 @@ router.get('/auth', tokenAuth, (req, res) => {
       }
     ]
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(dbPostData => {
+
+      res.json(dbPostData)
+    
+      //res.header( "authorization", "Bearer " + localStorage.getItem('savedAccesToken'));
+      //res.redirect("/homepage", {books:(dbPostData)})
+      //res.json(dbPostData)
+    
+    
+    })
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
