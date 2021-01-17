@@ -4,10 +4,50 @@ const {Book, User, Comment, Vote} = require('../models');
 const router = require('express').Router();
 
 
-// Homepage page
+// Homepage page get all books in db
 router.get('/', (req, res) => {
-  res.render('homepage');
+   //console.log('======================');
+   Book.findAll({
+    attributes: [
+      'id',
+      'title',
+      'author',
+      'created_at',
+    ],
+    order: [['created_at', 'DESC']],
+    include: [
+        {
+            model: Comment,
+            attributes: ['id', 'comment_text', 'book_id', 'user_id', 'created_at'],
+            include: {
+              model: User,
+              attributes: ['username']
+            }
+        },
+      
+      {
+        model: User,
+        attributes: ['username']
+      }
+    ]
+  })
+    .then(dbPostData => {
+      
+      const books = dbPostData.map(book => book.get({plain:true}));
+      console.log(books)
+      res.render('homepage', {
+        books
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
+
+
+
+
 
 
 // login page
