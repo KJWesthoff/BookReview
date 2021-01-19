@@ -2,13 +2,21 @@ const jwt = require('jsonwebtoken');
 
 
 function tokenAuth (req,res,next){
-    // look in the autorization part of the httprequest header
+    
+  
 
-
-    const authHeader = req.headers['authorization']
-    // dig out the token
-    const token = authHeader && authHeader.split(' ')[1]
-
+    // for a accessToken cookie else look in the autorization part of the httprequest header  
+    
+    if(token = req.cookies['accessToken']){
+        const token = req.cookies['accessToken'];
+    } else {
+        // dig token out of cookie
+        
+        const authHeader = req.headers['authorization']
+        const token = authHeader && authHeader.split(' ')[1]
+        
+    }
+    
     // check if there is a token
     if(token == null){
         return res.sendStatus(401)
