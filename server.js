@@ -4,7 +4,7 @@ const path = require('path'); // for stitching together paths
 const sequelize = require('./config/connection');
 const controllers = require('./controllers');
 //const session = require('express-session');
-
+const cookieParser = require('cookie-parser');
 
 
 
@@ -18,13 +18,15 @@ app.use(express.json()); // needed to code and decode req and res
 // Set the handlebars enging (npm express-handlebars)
 app.engine('handlebars', exphbs()); 
 app.set('view engine', 'handlebars');
-
+app.use(cookieParser());
 // enable use of a static folder for client side js
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.use(controllers);
 //app.use(session);
+
 
 // launch SQL server and app server
 sequelize.sync({ force: false }).then(() => {
