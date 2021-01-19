@@ -37,6 +37,7 @@ class Book extends Model {
   }
 }
 
+
 // create fields/columns for Book model
 Book.init(
   {
