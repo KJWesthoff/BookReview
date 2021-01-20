@@ -21,12 +21,10 @@
       <nav id="navigation">
           <button class="button" href="">Dashboard</button>
           <button class="button" href="">My Books</button>
-          <button class="button" href="">Log In</button>
-          <button class="button" href="">Log Out</button>
           {{#if loggedIn}}
-          <button id="logout" class="btn-no-style">Logout</button>
+          <button class="button" href="">Log Out</button>
           {{else}}
-          <a href="/login">Login</a>
+          <button class="button" href="">Log In</button>
           {{/if}}
       </nav>
     </header>
