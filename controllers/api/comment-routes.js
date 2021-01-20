@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Comment } = require('../../models');
+const { Comment, Vote } = require('../../models');
 
 router.get('/', (req, res) => {
     Comment.findAll()
@@ -42,5 +42,16 @@ router.get('/', (req, res) => {
       });
   });
   
+
+  // Test the votes..
+  router.get('/votes', (req,res) =>{
+    Vote.findAll()
+    .then(dbCommentData => res.json(dbCommentData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
   module.exports = router;
   
