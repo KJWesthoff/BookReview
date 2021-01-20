@@ -58,6 +58,8 @@
         </form>
     </main>
 
-  {{!-- {{#if accessToken}} --}}
+
   <script src="/javascript/login.js"></script>
-  {{!-- {{/if}} --}}
+  {{#if loggedIn}}
+  <script src="/javascript/logout.js"></script>
+  {{/if}}

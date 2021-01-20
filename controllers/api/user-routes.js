@@ -102,6 +102,9 @@ router.post('/', (req, res) => {
 // post route log in an existing user 
 router.post('/login', (req, res) => {
 // expects {email: 'str@str.str', password: 'str'}
+//console.log("Login SERVER Side Function Running")
+ 
+
   User.findOne({
     where: {
       email: req.body.email
@@ -131,7 +134,9 @@ router.post('/login', (req, res) => {
     // Generate a jsonwebtoken with userdata as payload
     const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
     
-
+    req.session.loggedIn = true;
+      
+   
     // cookie version
     //req.session.save(()=>{
     //  req.session.user_id = dbUserData.id;
