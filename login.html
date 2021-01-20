@@ -2,27 +2,39 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 <link rel="stylesheet" href="./public/css/login.css">
 
 
 <body>
   <div class="wrapper">
     <header id="header">
-      <h1>
-        <img src="public/css/images/logo.png" class="img-fluid" alt="logo" href="">
-      </h1>
-    </header>
-    <nav id="navigation">
-      <button class="button" href="">Dashboard</button>
-      <button class="button" href="">My Books</button>
-      <button class="button" href="">Log In</button>
-      <button class="button" href="">Log Out</button>
-      {{#if loggedIn}}
-      <button id="logout" class="btn-no-style">Logout</button>
-      {{else}}
-      <a href="/login">Login</a>
-      {{/if}}
-    </nav>
+        <nav class="navbar navbar-expand-lg">
+            <a>
+                <img src="public/css/images/logo.png" class="img-fluid" alt="logo" href="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
     </header>
 
     <main id="content">
@@ -68,19 +80,6 @@
           </form>
 
         </div>
-
-
-        <form class="check-form">
-          <div>
-            <button type="submit">GoTo The Books</button>
-          </div>
-        </form>
-
-        <form class="logout-form">
-          <div>
-            <button type="Submit">Logout</button>
-          </div>
-        </form>
     </main>
 
     <footer id="footer" class="navbar fixed-bottom">
