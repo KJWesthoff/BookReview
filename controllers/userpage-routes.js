@@ -16,20 +16,25 @@ const tokenAuth = require("../utils/auth");
         ],
         order: [['created_at', 'DESC']],
         include: [
-            {
-
-              model: Comment,
-              attributes: ['comment_text', 'user_id'], 
-                where:{
-                  user_id:req.user_id
-                },
-                model: Vote,
-                  attributes: ['user_id'], 
-                    where:{
-                      user_id:req.user_id
-                    },  
+          /*
+          {
+            model: Comment,
+            
+            attributes: ['comment_text', 'user_id'], 
+              where:{
+                user_id:req.user_id
             },
+          },
+          */
+          {
+          model: Vote,
+          attributes:['user_id'], 
+            where:{
+              user_id:req.user_id
+            }, 
+          } 
         ],
+        
       })
       .then(dbPostData => {
         
