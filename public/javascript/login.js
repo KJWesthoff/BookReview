@@ -1,5 +1,7 @@
 // Handler for the login option
 async function loginFormHandler(event) {
+  
+  console.log("Login Function Running")
   event.preventDefault();
 
   const email = document.querySelector('#email-login').value.trim();
@@ -135,4 +137,4 @@ async function goToUserPageFormHandler(event) {
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
 document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
-document.querySelector('.userpage').addEventListener('click', goToUserPageFormHandler)
+//document.querySelector('.userpage').addEventListener('click', goToUserPageFormHandler)
