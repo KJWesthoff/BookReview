@@ -5,8 +5,10 @@ const { Book, User, Vote, Comment } = require('../../models');
 const tokenAuth = require("../../utils/auth");
 
 // get all Books with authorization
-router.get('/auth', tokenAuth, (req, res) => {
+router.get('/auth', tokenAuth,  (req, res) => {
   //console.log('======================');
+  
+  
   Book.findAll({
     attributes: [
       'id',
@@ -33,11 +35,11 @@ router.get('/auth', tokenAuth, (req, res) => {
   })
     .then(dbPostData => {
 
-      res.json(dbPostData)
-    
+      //res.json(dbPostData)
+      //console.log("authorization", "Bearer " + localStorage.getItem('savedAccesToken'))
       //res.header( "authorization", "Bearer " + localStorage.getItem('savedAccesToken'));
       //res.redirect("/homepage", {books:(dbPostData)})
-      //res.json(dbPostData)
+      res.json(dbPostData)
     
     
     })
@@ -152,7 +154,7 @@ router.put('/:id', (req, res) => {
 Book.update(
     {
     title: req.body.title,
-    author:req.body.author   
+    author:req.body.author,   
     },
     {
     where: {
@@ -172,6 +174,32 @@ Book.update(
     res.status(500).json(err);
     });
 });
+
+
+router.put('/add_user:id', (req, res) => {
+  Book.update(
+      {
+        user_id: req.body.user_id
+      },
+      {
+      where: {
+          id: req.params.id
+      }
+      }
+  )
+      .then(dbPostData => {
+      if (!dbPostData) {
+          res.status(404).json({ message: 'No post found with this id' });
+          return;
+      }
+      res.json(dbPostData);
+      })
+      .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+      });
+  });
+
 
 router.delete('/:id',  (req, res) => {
 Book.destroy({
