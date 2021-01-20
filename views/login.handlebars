@@ -1,54 +1,92 @@
-<form class="login-form">
-  <div>
-    <label for="email-login">Email:</label>
-    <input type="text" id="email-login" />
-  </div>
-  <div>
-    <label for="password-login">Password:</label>
-    <input type="password" id="password-login" />
-  </div>
-  <div>
-    <button type="submit">Login</button>
-  </div>
-</form>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="./public/css/login.css">
+
+
+<body>
+    <div class="wrapper">
+        <header id="header">
+            <h1>
+                <img src="public/css/images/logo.png" class="img-fluid" alt="logo" href="">
+            </h1>
+        </header>
+        <nav id="navigation">
+            <button class="button" href="">Dashboard</button>
+            <button class="button" href="">My Books</button>
+            <button class="button" href="">Log In</button>
+            <button class="button" href="">Log Out</button>
+            <!-- {{#if loggedIn}} -->
+            <!-- <button id="logout" class="btn-no-style">Logout</button> -->
+            <!-- {{else}} -->
+            <!-- <a href="/login">Login</a> -->
+            <!-- {{/if}} -->
+        </nav>
+        </header>
+
+        <main id="content">
+            <!-- {{{ body }}} -->
+
+            <form class="login-form">
+                <div>
+                    <label for="email-login">Email:</label>
+                    <input type="text" id="email-login" />
+                </div>
+                <div>
+                    <label for="password-login">Password:</label>
+                    <input type="password" id="password-login" />
+                </div>
+                <div>
+                    <button type="submit">Login</button>
+                </div>
+            </form>
 
 
 
+            <form class="signup-form">
+                <div>
+                    <label for="username-signup">Username:</label>
+                    <input type="text" id="username-signup" />
+                </div>
+                <div>
+                    <label for="email-signup">Email:</label>
+                    <input type="text" id="email-signup" />
+                </div>
+                <div>
+                    <label for="password-signup">Password:</label>
+                    <input type="password" id="password-signup" />
+                </div>
+                <div>
+                    <button type="submit">Signup</button>
+                </div>
+            </form>
 
 
+            <form class="check-form">
+                <div>
+                    <button type="submit">GoTo The Books</button>
+                </div>
+            </form>
 
-<form class="signup-form">
-  <div>
-    <label for="username-signup">Username:</label>
-    <input type="text" id="username-signup" />
-  </div>
-  <div>
-    <label for="email-signup">Email:</label>
-    <input type="text" id="email-signup" />
-  </div>
-  <div>
-    <label for="password-signup">Password:</label>
-    <input type="password" id="password-signup" />
-  </div>
-  <div>
-    <button type="submit">Signup</button>
-  </div>
-</form>
+            <form class="logout-form">
+                <div>
+                    <button type="Submit">Logout</button>
+                </div>
+            </form>
+        </main>
 
+        <footer id="footer" class="navbar fixed-bottom">
+            Don't just read it, logo it.
+        </footer>
+    </div>
 
-<form class="check-form">
-  <div>
-    <button type="submit">GoTo The Books</button>
-  </div>
-</form>
-
-<form class="logout-form">
-  <div>
-    <button type="Submit">Logout</button>
-  </div>
-</form>
+    <!-- {{#if loggedIn}} -->
+    <script src="/javascript/logout.js"></script>
+    <!-- {{/if}} -->
+</body>
+</html>
 
 
 
 <script src="/javascript/login.js"></script>
-
