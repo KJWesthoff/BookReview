@@ -102,9 +102,6 @@ router.post('/', (req, res) => {
 // post route log in an existing user 
 router.post('/login', (req, res) => {
 // expects {email: 'str@str.str', password: 'str'}
-
- 
-
   User.findOne({
     where: {
       email: req.body.email
@@ -153,9 +150,9 @@ router.post('/login', (req, res) => {
 });
 
 
+//
 
-
-// Update user infomation on the server    
+// Update user information on the server    
 router.put('/:id', tokenAuth, (req, res) => {
   // expects {username: <str>, email: <str>, password: <str>}
   
@@ -186,10 +183,6 @@ router.put('/:id', tokenAuth, (req, res) => {
 });
 
 
-
-
-
-
 // Delete a user
 router.delete('/:id', (req, res) => {
   User.destroy({
@@ -210,6 +203,16 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+router.post('/logout', (req,res)=>{
+  if (req.cookies.accessToken) {
+    // Remove the token from local storage and clear the cookie
+    document.cookie = "accessToken=";
+    res.status(204).end();
+  }
+  else {
+    res.status(404).end();
+  }
+})
 /*
 router.post('/logout', (req,res)=>{
   if(req.session.loggedIn) {

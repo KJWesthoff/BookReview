@@ -21,10 +21,10 @@
       <nav id="navigation">
           <button class="button" href="/">Home</button>
           <button class="button" href="/userpage">My Books</button>
-          {{#if loggedIn}}
-          <button class="button" href="">Log Out</button>
+          {{#if accessToken}}
+          <button id= "logout" class="button" href="">Log Out</button>
           {{else}}
-          <button class="button" href="/login">Log In</button>
+          <button class="button" href="/login"`¡`>Log In</button>
           {{/if}}
       </nav>
     </header>
@@ -36,7 +36,7 @@
     </footer>
   </div>
   
-  {{#if loggedIn}}
+  {{#if accessToken}}
   <script src="/javascript/logout.js"></script>
   {{/if}}
 </body>

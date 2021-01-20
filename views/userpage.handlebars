@@ -1,10 +1,10 @@
 
 <h1>This is the userpage for {{user}}</h1>
-<ol class="book-list">
+<ul class="book-list">
   {{#each books as |book|}}
   <li>
     <p>Book</p>
     {{> book-info book}}
   </li>
   {{/each}}
-</ol>
+</ul>

@@ -1,8 +1,9 @@
-<ol class="book-list">
+<ul class="book-list">
   {{#each books as |book|}}
   <li>
-    <p>Book</p>
-    {{> book-info book}}
+    <p>
+      {{> book-info book }}
+    </p>
   </li>
   {{/each}}
-</ol>
+</ul>

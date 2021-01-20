@@ -83,14 +83,6 @@ async function signupFormHandler(event) {
   
 }
 
-// Handler for the logout option
-async function logoutFormHandler(event) {
-  event.preventDefault();
-  // Remove the token from local storage and clear the cookie
-  localStorage.removeItem('savedAccessToken');
-  document.cookie = "accessToken=";
-      
-}
 
 // Test functions for test buttons
 // ==================================================== 
