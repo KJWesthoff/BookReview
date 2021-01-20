@@ -1,8 +1,3 @@
-
-
-  
-
-
 // Handler for the login option
 async function loginFormHandler(event) {
   event.preventDefault();
@@ -27,7 +22,7 @@ async function loginFormHandler(event) {
       let accessToken = await data.accessToken
         
       // Store the token in local storage for later use
-      localStorage.setItem('savedAccesToken', accessToken)
+      localStorage.setItem('savedAccessToken', accessToken)
 
       // Also store the token in a cookie
       document.cookie = "accessToken="+accessToken;
@@ -74,7 +69,7 @@ async function signupFormHandler(event) {
       let accessToken = await data.accessToken
         
       // Store the token in local storage for later use
-      localStorage.setItem('savedAccesToken', accessToken)
+      localStorage.setItem('savedAccessToken', accessToken)
 
       // Also store the token in a cookie
       document.cookie = "accessToken="+accessToken;
@@ -93,7 +88,7 @@ async function signupFormHandler(event) {
 async function logoutFormHandler(event) {
   event.preventDefault();
   // Remove the token from local storage and clear the cookie
-  localStorage.removeItem('savedAccesToken');
+  localStorage.removeItem('savedAccessToken');
   document.cookie = "accessToken=";
       
 }
@@ -106,15 +101,15 @@ async function checkFormHandler(event) {
   event.preventDefault();
 
   // handle the case where there is no token (user logged)
-  if(!localStorage.getItem('savedAccesToken')){
+  if(!localStorage.getItem('savedAccessToken')){
     console.log("No token")
     return;
 
   }
-  //console.log( 'Bearer ' + localStorage.getItem('savedAccesToken'));
+  //console.log( 'Bearer ' + localStorage.getItem('savedAccessToken'));
   response = await fetch('/api/books/auth', {
     method:'get',
-    headers: {'authorization': 'Bearer ' + localStorage.getItem('savedAccesToken')}
+    headers: {'authorization': 'Bearer ' + localStorage.getItem('savedAccessToken')}
   })
 
   console.log(await response.json())
@@ -127,7 +122,7 @@ async function goToUserPageFormHandler(event) {
   event.preventDefault();
 
   // handle the case where there is no token (user logged)
-  if(!localStorage.getItem('savedAccesToken')){
+  if(!localStorage.getItem('savedAccessToken')){
     console.log("No token")
     return;
 
