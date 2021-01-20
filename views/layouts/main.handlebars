@@ -19,12 +19,12 @@
         <img src="/css/images/logo.png" class="img-fluid" alt="logo" href="">
       </h1></header>
       <nav id="navigation">
-          <button class="button" href="">Dashboard</button>
-          <button class="button" href="">My Books</button>
+          <button class="button" href="/">Home</button>
+          <button class="button" href="/userpage">My Books</button>
           {{#if loggedIn}}
           <button class="button" href="">Log Out</button>
           {{else}}
-          <button class="button" href="">Log In</button>
+          <button class="button" href="/login">Log In</button>
           {{/if}}
       </nav>
     </header>
