@@ -15,6 +15,11 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json()); // needed to code and decode req and res
 
+//importing Helpers function for formatting help. 
+const helpers = require('./utils/helpers');
+
+const hbs = exphbs.create({ helpers });
+
 // Set the handlebars enging (npm express-handlebars)
 app.engine('handlebars', exphbs()); 
 app.set('view engine', 'handlebars');
