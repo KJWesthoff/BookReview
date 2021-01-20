@@ -6,6 +6,9 @@ const tokenAuth = require("../utils/auth");
 // Get all the users books
   // Make a combined query of Votes and comments for a given user
   router.get('/',tokenAuth, (req, res) => {
+    
+    console.log(req.session.loggedIn)
+    
     Book.findAll({
      
         attributes: [
