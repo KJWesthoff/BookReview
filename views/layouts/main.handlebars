@@ -23,24 +23,24 @@
           <button class="button" href="">My Books</button>
           <button class="button" href="">Log In</button>
           <button class="button" href="">Log Out</button>
-        <!-- {{#if loggedIn}} -->
-        <!-- <button id="logout" class="btn-no-style">Logout</button> -->
-        <!-- {{else}} -->
-        <!-- <a href="/login">Login</a> -->
-        <!-- {{/if}} -->
+          {{#if loggedIn}}
+          <button id="logout" class="btn-no-style">Logout</button>
+          {{else}}
+          <a href="/login">Login</a>
+          {{/if}}
       </nav>
     </header>
     <main id="content">
-      <!-- {{{ body }}} -->
+       {{{ body }}}
     </main>
     <footer id="footer" class="navbar fixed-bottom">
       Don't just read it, logo it.
     </footer>
   </div>
   
-  <!-- {{#if loggedIn}} -->
+  {{#if loggedIn}}
   <script src="/javascript/logout.js"></script>
-  <!-- {{/if}} -->
+  {{/if}}
 </body>
 
 </html>
