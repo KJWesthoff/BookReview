@@ -29,7 +29,7 @@ const helpers = require('./utils/helpers');
 
 const hbs = exphbs.create({ helpers });
 
-// Set the handlebars enging (npm express-handlebars)
+// Set the handlebars engine (npm express-handlebars)
 app.engine('handlebars', hbs.engine); 
 app.set('view engine', 'handlebars');
 
@@ -37,7 +37,7 @@ app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // enable use of a static folder for client side js
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(controllers);
 // launch SQL server and app server
