@@ -4,6 +4,7 @@ body {
  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
  font-size: 13px;
  background-color: #F4EDE2;
+ color: #3B3224;
 }
 #wrapper { 
  margin: 0 auto;
@@ -15,30 +16,48 @@ body {
  border: 1px solid #ccc;
  height: 100px;
  background: #719D6B;
+ /*display: flex;*/
+ justify-content: space-between;
+ position: relative;
 }
 .img-fluid {
     /* max-width: 25%; */
-    max-height: 88px;
+    max-height: 80px;
 }
-#navigation {
+/*#navigation{
  width: 100%;
  height: 60px;
  padding: 10px;
  border: 1px solid #ccc;
  background-color:#C8BBA7;
+}*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
 }
-button {
-    background-color:#C8BBA7;
+.nav-item {
+    background-color:#719D6B;
     border: 0;
     padding: 1%;
     color: white;
     font-weight: bold;
     border-radius: 5px;
 }
-button:hover {
+.nav-item:hover {
     background-color: #b2c7af;
     color: #3B3224;
 }
+.nav-link {
+    color: white;
+}
+.nav-link:hover {
+    color:#3B3224;
+}
+.navbar-nav > li{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 #content { 
  width: 100%;
  color: #333;
@@ -52,4 +71,24 @@ button:hover {
  border: 1px solid #ccc;
  background-color:#b2c7af;
  padding: 10px;
+ font-weight: bold;
+}
+
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+    /*.navbar-nav > li{
+        margin-left: 0;
+        margin-right: 0;
+        display: inline;
+        position: absolute;
+    }*/
+
+    nav li {
+        display: inline-block;
+    }
+
+    nav li a {
+        display: inline-block;
+    }
 }
