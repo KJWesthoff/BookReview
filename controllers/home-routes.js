@@ -1,13 +1,13 @@
 
 const sequelize = require('../config/connection');
-const {Book, User, Comment, Vote} = require('../models');
+const { Book, User, Comment, Vote } = require('../models');
 const router = require('express').Router();
 
 
 // Homepage page get all books in db
 router.get('/', (req, res) => {
-   //console.log('======================');
-   Book.findAll({
+  //console.log('======================');
+  Book.findAll({
     attributes: [
       'id',
       'title',
@@ -16,15 +16,15 @@ router.get('/', (req, res) => {
     ],
     order: [['created_at', 'DESC']],
     include: [
-        {
-            model: Comment,
-            attributes: ['id', 'comment_text', 'book_id', 'user_id', 'created_at'],
-            include: {
-              model: User,
-              attributes: ['username']
-            }
-        },
-      
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'book_id', 'user_id', 'created_at'],
+        include: {
+          model: User,
+          attributes: ['username']
+        }
+      },
+
       {
         model: User,
         attributes: ['username']
@@ -32,11 +32,12 @@ router.get('/', (req, res) => {
     ]
   })
     .then(dbPostData => {
-      
-      const books = dbPostData.map(book => book.get({plain:true}));
+
+      const books = dbPostData.map(book => book.get({ plain: true }));
       console.log(books)
       res.render('homepage', {
-        books
+        books,
+        loggedIn: req.session.loggedIn
       });
     })
     .catch(err => {
@@ -52,10 +53,14 @@ router.get('/', (req, res) => {
 
 // login page
 router.get('/login', (req, res) => {
-    res.render('login');
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
 });
 
 
-module.exports = router;
+  module.exports = router;
 
 

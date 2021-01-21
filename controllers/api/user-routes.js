@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
       },
       {
         model: Book,
-        attributes: ['title','author'],
+        attributes: ['title', 'author'],
       }
     ]
   })
@@ -68,29 +68,32 @@ router.post('/', (req, res) => {
     .then(dbUserData => {
 
 
-        // Dig out the data we want from the dbUserData returned from the DB
-        const userdata = {
+      // Dig out the data we want from the dbUserData returned from the DB
+      const userdata = {
         user_id: dbUserData.id,
         username: dbUserData.username,
         user_email: dbUserData.email
-        } 
+      }
+
+      req.session.save(() => {
+        req.session.loggedIn = true;
+      });
 
 
+      // Generate a jsonwebtoken with userdata as payload
+      const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
 
-        // Generate a jsonwebtoken with userdata as payload
-        const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
-        
-        res.json({message: 'You are now added as user!', accessToken:accessToken });
+      res.json({ message: 'You are now added as user!', accessToken: accessToken });
 
-        /*  // cookie version
-        req.session.save(() => {
-            req.session.user_id = dbUserData.id;
-            req.session.username = dbUserData.username;
-            req.session.loggedIn = true;
-        
-            res.json(dbUserData);
-        });
-        */
+      /*  // cookie version
+      req.session.save(() => {
+          req.session.user_id = dbUserData.id;
+          req.session.username = dbUserData.username;
+          req.session.loggedIn = true;
+      
+          res.json(dbUserData);
+      });
+      */
     })
     .catch(err => {
       console.log(err);
@@ -101,9 +104,9 @@ router.post('/', (req, res) => {
 
 // post route log in an existing user 
 router.post('/login', (req, res) => {
-// expects {email: 'str@str.str', password: 'str'}
-//console.log("Login SERVER Side Function Running")
- 
+  // expects {email: 'str@str.str', password: 'str'}
+  //console.log("Login SERVER Side Function Running")
+
 
   User.findOne({
     where: {
@@ -115,7 +118,7 @@ router.post('/login', (req, res) => {
       return;
     }
 
-    
+
     // check the password with the function in models/User
     const validPassword = dbUserData.checkPassword(req.body.password);
 
@@ -126,19 +129,20 @@ router.post('/login', (req, res) => {
 
     // Dig out the data we want from the dbUserData returned from the DB
     const userdata = {
-        user_id: dbUserData.id,
-        username: dbUserData.username,
-        user_email: dbUserData.email
-    } 
+      user_id: dbUserData.id,
+      username: dbUserData.username,
+      user_email: dbUserData.email
+    }
 
     // Generate a jsonwebtoken with userdata as payload
     const accessToken = jwt.sign(userdata, process.env.ACCESS_TOKEN_SECRET)
-    
-    req.session.loggedIn = true;
-      
-   
+    req.session.save(() => {
+      req.session.loggedIn = true;
+    });
+
+
     // cookie version
-    //req.session.save(()=>{
+    //
     //  req.session.user_id = dbUserData.id;
     //  req.session.username = dbUserData.username;
     //  req.session.loggedIn = true;
@@ -146,27 +150,35 @@ router.post('/login', (req, res) => {
     //});
 
     // Return the webtoken to client
-    
-    res.json({message: 'You are now logged in!', accessToken:accessToken });
-      
-    
- 
+
+    res.json({ message: 'You are now logged in!', accessToken: accessToken });
+
+
+
   });
 });
 
 
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session = null
+    res.status(204).end();
+  }
+  else {
+    res.status(404).end();
+  }
+})
 
-
-// Update user infomation on the server    
+// Update user information on the server    
 router.put('/:id', tokenAuth, (req, res) => {
   // expects {username: <str>, email: <str>, password: <str>}
-  
-  // cehck if user login email is the same as the token
-  if(req.user_email != req.body.user_email){
-    res.status(406).json({ message: 'You can only change your own account'});
+
+  // check if user login email is the same as the token
+  if (req.user_email != req.body.user_email) {
+    res.status(406).json({ message: 'You can only change your own account' });
     return;
-  }  
-  
+  }
+
   // pass in req.body instead to only update what's passed through
   User.update(req.body, {
     individualHooks: true,
@@ -212,17 +224,5 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-/*
-router.post('/logout', (req,res)=>{
-  if(req.session.loggedIn) {
-    req.session.destroy(()=>{
-      res.status(204).end();
-    });
-  }
-  else {
-    res.status(404).end();
-  }
-})
-*/
 
 module.exports = router;

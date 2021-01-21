@@ -20,11 +20,11 @@
       </h1></header>
       <nav id="navigation">
           <button class="button" href="/">Home</button>
-          <button class="button" href="/userpage">My Books</button>
           {{#if loggedIn}}
-          <button class="button" href="">Log Out</button>
+          <button class="button" href="/userpage">My Books</button>
+          <button id = "logout" class="button" href="/logout">Log Out</button>
           {{else}}
-          <button class="button" href="/login">Log In</button>
+          <button id = "login" class="button" href="/login">Log In</button>
           {{/if}}
       </nav>
     </header>

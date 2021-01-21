@@ -30,7 +30,8 @@ async function loginFormHandler(event) {
       // Also store the token in a cookie
       document.cookie = "accessToken="+accessToken;
       
-      
+      document.location.replace('/userpage');
+
       //document.location.replace('/dashboard');
     } else {
       alert(response.statusText);
@@ -86,14 +87,14 @@ async function signupFormHandler(event) {
   
 }
 
-// Handler for the logout option
-async function logoutFormHandler(event) {
-  event.preventDefault();
-  // Remove the token from local storage and clear the cookie
-  localStorage.removeItem('savedAccessToken');
-  document.cookie = "accessToken= ;expires=Thu, 01 Jan 1970 00:00:00 UTC"
+// // Handler for the logout option
+// async function logoutFormHandler(event) {
+//   event.preventDefault();
+//   // Remove the token from local storage and clear the cookie
+//   localStorage.removeItem('savedAccessToken');
+//   document.cookie = "accessToken= ;expires=Thu, 01 Jan 1970 00:00:00 UTC"
       
-}
+// }
 
 // Test functions for test buttons
 // ==================================================== 
@@ -135,7 +136,6 @@ async function goToUserPageFormHandler(event) {
 // ===========================================
 
 
-document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+document.querySelector('#login').addEventListener('submit', loginFormHandler);
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
-document.querySelector('.logout-form').addEventListener('submit', logoutFormHandler);
+// document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
