@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const sequelize = require('../config/connection');
 const { Book, User, Comment, Vote } = require('../models');
 const tokenAuth = require("../utils/auth");
@@ -18,37 +19,33 @@ const tokenAuth = require("../utils/auth");
           'created_at',
         ],
         order: [['created_at', 'DESC']],
+        
         include: [
           {
             model:User,
-            attributes:['id', 'username']
-          },
-          {
-            model: Comment,
-            
-            attributes: ['comment_text', 'user_id'], 
-              include:[
-                {
-                model:User,
-                attributes:['id', 'book_id']
+            attributes:['id', 'username'],
+            include: [
+              {
+                model: Comment,
+                attributes: ['comment_text', 'user_id'],
+                //where:{user_id:req.user_id},
+              },
+              {
+                model: Vote,
+                attributes:['user_id'],
+                //where:{user_id:req.user_id},  
               }, 
+             
             ],
-            where:{
-              id:req.user_id
-            }
+            where:{id:req.user_id}
+            
           },
+        ]
           
-          {
-          model: Vote,
-
-          attributes:['user_id'], 
-            where:{
-              user_id:req.user_id
-            }, 
-          } 
-        ],
+      })    
         
-      })
+        
+      
       .then(dbPostData => {
         
         const books = dbPostData.map(book => book.get({plain:true}));
