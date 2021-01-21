@@ -1,18 +1,15 @@
 <article class="book">
   <div class="title">
-    <a href="/book/{{id}}"><span>Title: {{title}}</span></a>
-    <span>By: {{author}}</span>
+    <span>Title: <a href="/book/{{id}}">{{title}}</a></span>
+    <p><span>By: {{author}}</span></p>
   </div>
-  <div class="meta">
     <div class="meta">
-      {{vote_count}} 
-      {{!-- {{format_plural "point" vote_count}}  --}}
-      by {{user.username}} 
-      {{!-- on {{format_date created_at}} --}}
+      {{vote_count}} {{format_plural "point" vote_count}} 
+      submitted by {{user.username}} 
+      on {{format_date created_at}}
       |
-      <a href="/book/{{id}}">{{comments.length}} 
-      {{!-- {{format_plural "comment" comments.length}} --}}
-      </a>
+      <a href="/book/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
     </div>
+<p></p>
 
 </article>
