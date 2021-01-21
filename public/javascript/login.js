@@ -30,7 +30,7 @@ async function loginFormHandler(event) {
       // Also store the token in a cookie
       document.cookie = "accessToken="+accessToken;
       
-      document.location.replace('/userpage');
+      document.location.replace('/');
 
       //document.location.replace('/dashboard');
     } else {
@@ -136,6 +136,6 @@ async function goToUserPageFormHandler(event) {
 // ===========================================
 
 
-document.querySelector('#login').addEventListener('submit', loginFormHandler);
+document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
 // document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
