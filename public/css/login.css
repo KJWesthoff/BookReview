@@ -5,6 +5,7 @@ body {
  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
  font-size: 13px;
  background-color: #F4EDE2;
+ color: #3B3224;
 }
 #wrapper { 
  margin: 0 auto;
@@ -13,8 +14,6 @@ body {
 #header {
  width: 100%;
  padding: 10px;
- border: 1px solid #ccc;
- height: 100px;
  background: #719D6B;
  justify-content: space-between;
 }
@@ -36,14 +35,21 @@ body {
 .nav-item {
     background-color:#719D6B;
     border: 0;
-    padding: 1%;
+    padding: 10px;
     color: white;
     font-weight: bold;
     border-radius: 5px;
 }
 .nav-item:hover {
     background-color: #b2c7af;
+    font-size: smaller;
     color: #3B3224;
+    padding: 3px;
+}
+
+button:hover {
+    background-color: #719D6B;
+    color: white;
 }
 .nav-link {
     color: white;
