@@ -4,6 +4,7 @@ body {
  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
  font-size: 13px;
  background-color: #F4EDE2;
+ color: #3B3224;
 }
 #wrapper { 
  margin: 0 auto;
@@ -20,7 +21,7 @@ body {
 }
 .img-fluid {
     /* max-width: 25%; */
-    max-height: 88px;
+    max-height: 80px;
 }
 /*#navigation{
  width: 100%;
@@ -68,4 +69,78 @@ body {
  border: 1px solid #ccc;
  background-color:#b2c7af;
  padding: 10px;
+ font-weight: bold;
+}
+
+
+
+
+/* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */
+@media screen and (max-width: 980px) {
+    header {
+        padding-bottom: 0;
+        justify-content: center;
+        position: relative;
+        height: 80px;
+    }
+
+    .img-fluid {
+        height: 60px;
+    }
+
+    .navbar ul {
+        margin-top: 20px;
+        width: 100%;
+        float: left;
+        display: block;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        font-size: 20px;
+    }
+
+    footer {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/* MEDIA QUERY FOR TABLETS AND SMALLER */
+@media screen and (max-width: 768px) {
+    header {
+        padding-bottom: 0;
+        justify-content: center;
+        position: relative;
+    }
+
+    .img-fluid {
+        height: 60px;
+    }
+
+    .navbar ul {
+        margin-top: 20px;
+        width: 100%;
+        float: left;
+        display: block;
+        text-align: center;
+    }
+
+    header nav ul li a {
+        font-size: 20px;
+    }
+
+    footer {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+/* MEDIA QUERY FOR MOBILE PHONES AND SMALLER */
+@media screen and (max-width: 575px) {
+    .navbar ul {
+        float: none;
+        width: 100%;
+    }
+
 }
