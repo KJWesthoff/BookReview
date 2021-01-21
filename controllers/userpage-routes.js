@@ -19,18 +19,28 @@ const tokenAuth = require("../utils/auth");
         ],
         order: [['created_at', 'DESC']],
         include: [
-          /*
+          {
+            model:User,
+            attributes:['id', 'username']
+          },
           {
             model: Comment,
             
             attributes: ['comment_text', 'user_id'], 
-              where:{
-                user_id:req.user_id
-            },
+              include:[
+                {
+                model:User,
+                attributes:['id', 'book_id']
+              }, 
+            ],
+            where:{
+              id:req.user_id
+            }
           },
-          */
+          
           {
           model: Vote,
+
           attributes:['user_id'], 
             where:{
               user_id:req.user_id
