@@ -45,7 +45,6 @@ const tokenAuth = require("../utils/auth");
       })    
         
         
-      
       .then(dbPostData => {
         
         const books = dbPostData.map(book => book.get({plain:true}));
@@ -53,7 +52,8 @@ const tokenAuth = require("../utils/auth");
         
         res.render('userpage', {
           books:books,
-          user:req.username
+          user:req.username,
+          loggedIn:req.session.loggedIn
         });
       })
       .catch(err => {
