@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { Comment, Vote } = require('../../models');
+const tokenAuth = require("../../utils/auth");
+
 
 router.get('/', (req, res) => {
     Comment.findAll()
@@ -10,7 +12,7 @@ router.get('/', (req, res) => {
       });
   });
   
-  router.post('/', (req, res) => {
+  router.post('/', tokenAuth, (req, res) => {
     Comment.create({
       comment_text: req.body.comment_text,
       user_id: req.body.user_id,
@@ -23,7 +25,7 @@ router.get('/', (req, res) => {
       });
   });
   
-  router.delete('/:id', (req, res) => {
+  router.delete('/:id', tokenAuth,(req, res) => {
     Comment.destroy({
       where: {
         id: req.params.id
