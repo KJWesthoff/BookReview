@@ -29,10 +29,12 @@
           <ul class="nav navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link" href="/">Home</a>
+              {{#if loggedIn}}
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/userpage">Bookshelf</a>
             </li>
+             {{/if}}
             {{#if loggedIn}}
             <li class="nav-item">
               <a class="nav-link" id="logout" href="#">Log Out</a>
