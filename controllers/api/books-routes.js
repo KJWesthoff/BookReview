@@ -7,8 +7,6 @@ const tokenAuth = require("../../utils/auth");
 // get all Books with authorization
 router.get('/auth', tokenAuth,  (req, res) => {
   //console.log('======================');
-  
-  
   Book.findAll({
     attributes: [
       'id',
@@ -132,7 +130,7 @@ router.get('/:id', (req, res) => {
 
 // Create a Book in the database
 
-router.post('/', (req, res) => {
+router.post('/',tokenAuth, (req, res) => {
 // expects {title:  , author: , user_id: }
 Book.create({
     title: req.body.title,
@@ -148,13 +146,21 @@ Book.create({
     });
 });
 
+router.put('/upvote', tokenAuth, (req, res) => {
+  // custom static method created in models/Post.js
+  Book.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+    .then(updatedVoteData => res.json(updatedVoteData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
-
-router.put('/:id', (req, res) => {
+router.put('/:id', tokenAuth, (req, res) => {
 Book.update(
     {
     title: req.body.title,
-    author:req.body.author,   
+    author:req.body.author
     },
     {
     where: {
@@ -201,7 +207,7 @@ router.put('/add_user:id', (req, res) => {
   });
 
 
-router.delete('/:id',  (req, res) => {
+router.delete('/:id', tokenAuth, (req, res) => {
 Book.destroy({
     where: {
     id: req.params.id

@@ -1,5 +1,7 @@
 // Handler for the login option
 async function loginFormHandler(event) {
+  
+  console.log("Login Client Side Function Running")
   event.preventDefault();
 
   const email = document.querySelector('#email-login').value.trim();
@@ -20,14 +22,16 @@ async function loginFormHandler(event) {
         
       let data = await response.json();
       let accessToken = await data.accessToken
-        
+      
+      
       // Store the token in local storage for later use
       localStorage.setItem('savedAccessToken', accessToken)
 
       // Also store the token in a cookie
       document.cookie = "accessToken="+accessToken;
       
-      
+      document.location.replace('/');
+
       //document.location.replace('/dashboard');
     } else {
       alert(response.statusText);
@@ -83,14 +87,14 @@ async function signupFormHandler(event) {
   
 }
 
-// Handler for the logout option
-async function logoutFormHandler(event) {
-  event.preventDefault();
-  // Remove the token from local storage and clear the cookie
-  localStorage.removeItem('savedAccessToken');
-  document.cookie = "accessToken=";
+// // Handler for the logout option
+// async function logoutFormHandler(event) {
+//   event.preventDefault();
+//   // Remove the token from local storage and clear the cookie
+//   localStorage.removeItem('savedAccessToken');
+//   document.cookie = "accessToken= ;expires=Thu, 01 Jan 1970 00:00:00 UTC"
       
-}
+// }
 
 // Test functions for test buttons
 // ==================================================== 
@@ -134,5 +138,4 @@ async function goToUserPageFormHandler(event) {
 
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
-document.querySelector('.userpage').addEventListener('click', goToUserPageFormHandler)
+// document.querySelector('.check-form').addEventListener('submit', checkFormHandler);
