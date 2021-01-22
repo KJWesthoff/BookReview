@@ -30,7 +30,7 @@ async function loginFormHandler(event) {
       // Also store the token in a cookie
       document.cookie = "accessToken="+accessToken;
       
-      document.location.replace('/');
+      document.location.replace('/userpage');
 
       //document.location.replace('/dashboard');
     } else {
