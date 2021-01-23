@@ -88,10 +88,15 @@ const htmlCardifyBookdata = function(bookObj){
 
 
 const addBookToUser = async function () {
-    let title = this.querySelector(".card-title").textContent;
-    let author = this.querySelector(".card-text").textContent;
-    let img_url = this.querySelector("img").getAttribute("src");
     
+    var thiscard = (this.closest(".card"))
+  
+  
+    let title = thiscard.querySelector(".card-title").textContent;
+    let author = thiscard.querySelector(".card-text").textContent;
+    let img_url = thiscard.querySelector("img").getAttribute("src");
+    
+
 
     // first add the book to the db
     const response = await fetch('/api/books/', {
@@ -124,7 +129,7 @@ const addBookToUser = async function () {
 
 // Stars
 jQuery(document).ready(function($) {
-  $('.card .rating_stars span.r').hover(function() {
+  $('.rating_stars span.r').hover(function() {
               // get hovered value
               var rating = $(this).data('rating');
               var value = $(this).data('value');
@@ -167,4 +172,4 @@ document.querySelector('#book-search').addEventListener('click', bookSearchHandl
 //document.querySelector("#add-book-btn").addEventListener('click', addBookToUser)
 
 // jQuery used when the elements do not exist all the time
-$("body").on("click",".card" ,"#add-book-btn", addBookToUser);
+$("body").on("click","#add-book-btn", addBookToUser);
