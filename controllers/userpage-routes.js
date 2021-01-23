@@ -29,17 +29,13 @@ const tokenAuth = require("../utils/auth");
               {
                 model: Vote,
                 attributes:['user_id'],
-                //where:{user_id:req.user_id},
+                where:{id:req.user_id},
                 
               },
-              {
-                model: Comment,
-                attributes: ['comment_text', 'user_id'],
-                //where:{user_id:req.user_id},
-              }, 
+              
              
             ],
-            //where:{id:req.user_id}
+            
             
           },
         ]

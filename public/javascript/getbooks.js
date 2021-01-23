@@ -11,14 +11,14 @@ const bookSearchHandler = async function () {
     const searchData  = document.querySelector('#book-search-box').value.trim(); 
         // if the search is empty then:
         if(searchData === "" || searchData === null){
-            console.log("PLease enter a search");
+            console.log("Please enter a search");
         } else {
             response = await fetch(googleApiUrl+searchData)
             bookData = await response.json();
         
             
 
-            // render the boks on the frontpage
+            // render the books on the front page
             document.querySelector('#google_books_list').innerHTML = digOutBookdata(bookData)
 
         }
@@ -31,7 +31,8 @@ const digOutBookdata = function(bookList) {
         bookObj = {
             title:item.volumeInfo.title,
             author:item.volumeInfo.authors,
-            img_url:item.volumeInfo.imageLinks.thumbnail 
+            img_url:item.volumeInfo.imageLinks.thumbnail,
+            book_url:item.volumeInfo.infoLink 
         }
 
         outputList +=  `<div class="row mt-4">${htmlCardifyBookdata(bookObj)}</div>`;
@@ -54,9 +55,10 @@ const htmlCardifyBookdata = function(bookObj){
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">${bookObj.title}</h5>
-            <p class="card-text">Author: ${bookObj.author}</p>
+            <a class="card-text" href="${bookObj.book_url}" target="_blank">See it on Google</a>
+            <p class="card-text author">Author: ${bookObj.author}</p>
             
-            <button id="add-book-btn">Vote Book</button>
+          
             <span class="rating_stars rating_0">
               <span class='s' data-low='0.5' data-high='1'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
               <span class='s' data-low='1.5' data-high='2'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
@@ -87,36 +89,52 @@ const htmlCardifyBookdata = function(bookObj){
 }
 
 
-const addBookToUser = async function () {
+const addBookToUser = async function (title, author, stars, img_url, book_url) {
     
-    var thiscard = (this.closest(".card"))
-  
-  
-    let title = thiscard.querySelector(".card-title").textContent;
-    let author = thiscard.querySelector(".card-text").textContent;
-    let img_url = thiscard.querySelector("img").getAttribute("src");
     
-
-
-    // first add the book to the db
-    const response = await fetch('/api/books/', {
-        method: 'post',
+    //check if the book is already in the DB
+    let inDB = await fetch('/api/books/title', {
+      method: 'post',
         body: JSON.stringify({
           "title": title,
-          "author": author,
         }),
         headers: { 'Content-Type': 'application/json' }
-      });
+    });
+    
+    // Clunky number of books
+    nB = await inDB.json()
+    console.log(nB)
 
-    // then get the id of the   
-    ret = await response.json();  
-    console.log(title, ret.id);
+    if(nB.length == 0) {
+      // If not add the book to the db
+      const response = await fetch('/api/books/', {
+          method: 'post',
+          body: JSON.stringify({
+            "title": title,
+            "author": author,
+            "img_url":img_url,
+            "book_url":book_url
 
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+      // then get the id of the   
+      ret = await response.json();  
+      id = ret.id;  
+      console.log("ID from new" , id)  
+    } else {
+     id = nB[0].id
+     console.log("ID from OLD" , id)
+    }
+
+
+    
     const castVote = await fetch('/api/comments/vote', {
       method:'post',
       body:JSON.stringify({
-        "book_id": ret.id,
-        "stars": 22      
+        "book_id": id,
+        "stars": stars    
       }),
       headers: { 'Content-Type': 'application/json' }
     })
@@ -127,7 +145,7 @@ const addBookToUser = async function () {
 }
 
 
-// Stars
+// Listen to the Stars.... 
 jQuery(document).ready(function($) {
   $('body').on('mouseover','.rating_stars span.r', function(event) {
     event.stopImmediatePropagation()
@@ -138,80 +156,49 @@ jQuery(document).ready(function($) {
     let author = thiscard.querySelector(".card-text").textContent;
     let img_url = thiscard.querySelector("img").getAttribute("src");
 
-
-
     var rating = $(this).data('rating');
     var value = $(this).data('value');
-    console.log(title,rating,value)
     
-    $(this, "rating_stars").parent().attr('class', '').addClass('rating_stars').addClass('rating_'+rating);
-    highlight_star(value);          
-        
-   
+    $(thiscard).find("rating_stars").attr('class', '').addClass('rating_stars').addClass('rating_'+rating);
+    highlight_star(thiscard, value);  
+  });
+
+  $('body').on('click','.rating_stars span.r', function(event) {
+    event.stopImmediatePropagation()
+    
+    //console.log(this)
+    var thiscard = (this.closest(".card"))
+    let title = thiscard.querySelector(".card-title").textContent;
+    let author = thiscard.querySelector(".author").textContent;
+    let img_url = thiscard.querySelector("img").getAttribute("src");
+    let book_url = thiscard.querySelector("a").getAttribute("href");
+    var rating = $(this).data('rating');
+    var value = $(this).data('value');
+    
+    
+    
+    // Add The Book to the User
+    addBookToUser(title, author, rating, img_url, book_url)
+  
+  });
+
+
+  var highlight_star = function(card, rating) {
+    $(card).find('.rating_stars span.s').each(function() {
+        var low = $(this).data('low');
+        var high = $(this).data('high');
+        $(this).removeClass('active-high').removeClass('active-low');
+        if (rating >= high) $(this).addClass('active-high');
+        else if (rating == low) $(this).addClass('active-low');
+    });
+  }
+
 });
-
-
-
-
-
           
-          var highlight_star = function(rating) {
-            $('.rating_stars span.s').each(function() {
-                var low = $(this).data('low');
-                var high = $(this).data('high');
-                $(this).removeClass('active-high').removeClass('active-low');
-                if (rating >= high) $(this).addClass('active-high');
-                else if (rating == low) $(this).addClass('active-low');
-            });
-        }
-
-});
-          
-          
-          
-          /*
-          jQuery(document).ready(function($) {
-$('.rating_stars span.r').hover(function() {
-            // get hovered value
-            var rating = $(this).data('rating');
-            var value = $(this).data('value');
-            $(this).parent().attr('class', '').addClass('rating_stars').addClass('rating_'+rating);
-            highlight_star(value);
-        }, function() {
-            // get hidden field value
-            var rating = $("#rating").val();
-            var value = $("#rating_val").val();
-            $(this).parent().attr('class', '').addClass('rating_stars').addClass('rating_'+rating);
-            highlight_star(value);
-        }).click(function() {
-            // Set hidden field value
-            var value = $(this).data('value');
-            $("#rating_val").val(value);
-
-            var rating = $(this).data('rating');
-            $("#rating").val(rating);
-            
-            highlight_star(value);
-        });
-        
-        var highlight_star = function(rating) {
-            $('.rating_stars span.s').each(function() {
-                var low = $(this).data('low');
-                var high = $(this).data('high');
-                $(this).removeClass('active-high').removeClass('active-low');
-                if (rating >= high) $(this).addClass('active-high');
-                else if (rating == low) $(this).addClass('active-low');
-            });
-        }
-});
-
-*/
-
-
 
 
 document.querySelector('#book-search').addEventListener('click', bookSearchHandler)
 //document.querySelector("#add-book-btn").addEventListener('click', addBookToUser)
 
 // jQuery used when the elements do not exist all the time
-$("body").on("click","#add-book-btn", addBookToUser);
+//$("body").on("click","#add-book-btn", addBookToUser);
