@@ -25,19 +25,21 @@ const tokenAuth = require("../utils/auth");
             model:User,
             attributes:['id', 'username'],
             include: [
+ 
+              {
+                model: Vote,
+                attributes:['user_id'],
+                //where:{user_id:req.user_id},
+                
+              },
               {
                 model: Comment,
                 attributes: ['comment_text', 'user_id'],
                 //where:{user_id:req.user_id},
-              },
-              {
-                model: Vote,
-                attributes:['user_id'],
-                //where:{user_id:req.user_id},  
               }, 
              
             ],
-            where:{id:req.user_id}
+            //where:{id:req.user_id}
             
           },
         ]
@@ -52,7 +54,7 @@ const tokenAuth = require("../utils/auth");
         
         res.render('userpage', {
           books:books,
-          user:req.username,
+          user:req.session.username,
           loggedIn:req.session.loggedIn
         });
       })

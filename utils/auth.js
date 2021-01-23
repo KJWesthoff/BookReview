@@ -19,13 +19,14 @@ function tokenAuth (req,res,next){
     
     // check if there is a token
     if(token == null){
-        return res.sendStatus(401)
+        
+        res.redirect("/login");
     }
 
     // verify the token and dig out the payload (just user in this case)
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload)=> {
         if(err){
-            return res.sendStatus(403)
+            res.redirect("/login");
         }
         
         // set user on the req obj = user from token and pass on with next

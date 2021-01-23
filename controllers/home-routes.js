@@ -39,7 +39,8 @@ router.get('/', (req, res) => {
       console.log("Logged IN: ==========  ", req.session.loggedIn)
       res.render('homepage', {
         books,
-        loggedIn: req.session.loggedIn
+        loggedIn: req.session.loggedIn,
+        user:req.session.username
       });
     })
     .catch(err => {

@@ -34,8 +34,8 @@
             <li class="nav-item">
               <a class="nav-link" href="/userpage">Bookshelf</a>
             </li>
-             {{/if}}
-            {{#if loggedIn}}
+             
+            
             <li class="nav-item">
               <a class="nav-link" id="logout" href="#">Log Out</a>
             </li>
@@ -52,7 +52,12 @@
       {{{ body }}}
     </main>
     <footer id="footer" class="navbar fixed-bottom">
-      Don't just read it, logo it.
+      
+      
+      {{#if loggedIn}}
+      <p> Logged in as: {{user}} </p> 
+      {{/if}}
+      <p>Don't just read it, logo it.</p>
     </footer>
   </div>
 

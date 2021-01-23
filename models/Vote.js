@@ -26,7 +26,12 @@ Vote.init(
         model: 'book',
         key: 'id'
       }
+    },
+    stars: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
+    
   },
   {
     sequelize,
