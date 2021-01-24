@@ -187,6 +187,7 @@ jQuery(document).ready(function($) {
     
     // Add The Book to the User
     addBookToUser(title, author, value, img_url, book_url)
+    alert(title + " added to bookshelf with " + value +" stars")
   
   });
 
