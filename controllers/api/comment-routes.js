@@ -74,7 +74,7 @@ router.get('/', (req, res) => {
   });
 
 
-    // Test the votes by book no
+    // Test the av votes votes by book no
     router.get('/votes/:id', (req,res) =>{
       
       Vote.findAll({

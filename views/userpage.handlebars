@@ -1,11 +1,13 @@
 
 <h1>This is the userpage for {{user}}</h1>
  {{#each books as |book|}}
+
 <div class="row mt-4"></div>
- 
-  
-    {{> book-info book}}
-    {{> comments book.comments}}
- 
+   <div class="container"></div> 
+    
+        {{> book-info book=book loggedIn=true}}
+        {{> comments book.comments}}
+    
+    </div>
 </div>
  {{/each}}

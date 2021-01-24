@@ -19,6 +19,8 @@ const tokenAuth = require("../utils/auth");
           'created_at',
           'book_url',
           'img_url',
+          [sequelize.literal('(SELECT COUNT(stars) FROM vote WHERE book.id = vote.book_id)'), 'vote_count'],
+          [sequelize.literal('(SELECT AVG(stars) FROM vote WHERE book.id= vote.book_id)'), 'vote_avg']
         ],
         order: [['created_at', 'DESC']],
         include: [
@@ -31,8 +33,14 @@ const tokenAuth = require("../utils/auth");
                   
                  model:User,
                   
-                  attributes:['id','username'],
+                  attributes:[
+                    'id',
+                    'username',
+                    
+                
+                ],
                   where:{id:req.session.user_id},
+                  
                  
                 }
               ]

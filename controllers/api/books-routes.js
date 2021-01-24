@@ -15,6 +15,8 @@ router.get('/auth', tokenAuth,  (req, res) => {
       'img_url',
       'book_url',
       'created_at',
+      [sequelize.literal('(SELECT COUNT(stars) FROM vote WHERE book.id = vote.book_id)'), 'vote_count'],
+      [sequelize.literal('(SELECT AVG(stars) FROM vote WHERE book.id= vote.book_id)'), 'vote_avg']
     ],
     order: [['created_at', 'DESC']],
     include: [
@@ -30,7 +32,22 @@ router.get('/auth', tokenAuth,  (req, res) => {
         
       {
         model: Vote,
-        attributes: ['user_id', 'stars']
+        attributes:[
+          'user_id',
+          'stars',
+        
+        ],
+        include:[
+          {
+            
+           model:User,
+            
+            attributes:['id','username'],
+            
+           
+          }
+        ]
+
       }
     ]
   })
@@ -64,6 +81,8 @@ router.get('/', (req, res) => {
       'img_url',
       'book_url',
       'created_at',
+      [sequelize.literal('(SELECT COUNT(stars) FROM vote WHERE book.id = vote.book_id)'), 'vote_count'],
+      [sequelize.literal('(SELECT AVG(stars) FROM vote WHERE book.id= vote.book_id)'), 'vote_avg']
     ],
     order: [['created_at', 'DESC']],
     include: [
@@ -78,7 +97,22 @@ router.get('/', (req, res) => {
       
       {
         model: Vote,
-        attributes: ['user_id', 'stars']
+        attributes:[
+          'user_id',
+          'stars',
+        
+        ],
+        include:[
+          {
+            
+           model:User,
+            
+            attributes:['id','username'],
+            
+           
+          }
+        ]
+
       }
     ]
   })
