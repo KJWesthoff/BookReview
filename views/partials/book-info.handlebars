@@ -1,6 +1,6 @@
 
 <div class="col-lg-6">
-    <div class="card" book_id="{{id}}" style="">
+    <div class="card" style="width:30rem" book_id="{{id}}" style="">
       <div class="row no-gutters">
         <div class="col-md-4">
           <img src="{{img_url}}" class="card-img" alt="...">
@@ -11,18 +11,17 @@
             <a class="card-text" href="{{book_url}}" target="_blank">See it on Google</a>
             <p class="card-text author">Author: {{author}}</p>
           </div>
-          <div>This book has {{vote_count}} votes averaging {{vote_avg}} stars on Logophile</div>
-          {{#if loggedIn}}
-            <p>You gave this book {{stars}} stars</p>
-          {{/if}} 
-            
-        </div>
-        
+          <div>This book has {{vote_count}} votes averaging {{format_stars vote_avg}} stars on Logophile</div>
+            {{#if loggedIn}}
+              <p>You gave this book {{stars}} stars</p>
+            {{/if}} 
+
             {{#if loggedIn}}
             <div>
               <button class="comment_btn" >Add Comment</button>  
             </div>
             {{/if}}
+      </div>      
       </div>
     </div>
     

@@ -100,7 +100,7 @@ router.post('/', (req, res) => {
 // post route log in an existing user 
 router.post('/login', (req, res) => {
   // expects {email: 'str@str.str', password: 'str'}
-  console.log("Login SERVER Side Function Running")
+  //console.log("Login SERVER Side Function Running")
 
 
   User.findOne({
