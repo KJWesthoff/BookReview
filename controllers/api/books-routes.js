@@ -150,6 +150,10 @@ router.post('/title', (req, res) => {
   });
 
 
+//Find the votes of a book
+// Get book by id
+
+
 // Create a Book in the database
 
 router.post('/',tokenAuth, (req, res) => {
@@ -168,17 +172,7 @@ Book.create({
     res.status(500).json(err);
     });
 });
- /*
-router.put('/upvote', tokenAuth, (req, res) => {
-  // custom static method created in models/Post.js
-  Book.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
-    .then(updatedVoteData => res.json(updatedVoteData))
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-*/
+
 router.put('/:id', tokenAuth, (req, res) => {
 Book.update(
     {

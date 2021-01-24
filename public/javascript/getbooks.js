@@ -101,7 +101,7 @@ const addBookToUser = async function (title, author, stars, img_url, book_url) {
         headers: { 'Content-Type': 'application/json' }
     });
     
-    // Clunky number of books
+    // Clunky number of books check
     nB = await inDB.json()
     console.log(nB)
 
@@ -140,8 +140,6 @@ const addBookToUser = async function (title, author, stars, img_url, book_url) {
     })
 
     console.log(castVote);
-
-
 }
 
 
@@ -178,7 +176,7 @@ jQuery(document).ready(function($) {
     
     
     // Add The Book to the User
-    addBookToUser(title, author, rating, img_url, book_url)
+    addBookToUser(title, author, value, img_url, book_url)
   
   });
 
@@ -196,8 +194,9 @@ jQuery(document).ready(function($) {
 });
           
 
+$("body").on("click","#book-search", bookSearchHandler);
 
-document.querySelector('#book-search').addEventListener('click', bookSearchHandler)
+//document.querySelector('#book-search').addEventListener('click', bookSearchHandler)
 //document.querySelector("#add-book-btn").addEventListener('click', addBookToUser)
 
 // jQuery used when the elements do not exist all the time
