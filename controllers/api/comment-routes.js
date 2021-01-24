@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
       user_id: req.session.user_id,
       book_id: req.body.book_id
     }
-    console.log("VOTEOBJ ======================", voteObj);
+    //console.log("VOTEOBJ ======================", voteObj);
 
     Vote.create(voteObj)
       .then(dbVoteData => res.json(dbVoteData))
@@ -103,7 +103,7 @@ router.get('/', (req, res) => {
 
         let avg = sum/nVotes;
         
-        console.log(nVotes + " Votes, avg " + avg);
+        //console.log(nVotes + " Votes, avg " + avg);
 
         res.json({"votes":nVotes, "avg":avg})
       

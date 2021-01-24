@@ -60,9 +60,9 @@ router.get('/', (req, res) => {
     .then(dbPostData => {
 
       const books = dbPostData.map(book => book.get({ plain: true }));
-      console.log(books.map(book => book.votes))
+      //console.log(books.map(book => book.votes))
 
-      console.log("Logged IN: ==========  ", req.session.loggedIn)
+      //console.log("Logged IN: ==========  ", req.session.loggedIn)
       res.render('homepage', {
         books,
         loggedIn: req.session.loggedIn,
@@ -112,7 +112,7 @@ router.get('/book/:id', (req, res) => {
       }
       
       const book = dbPostData.get({ plain: true });
-      console.log(book)
+      //console.log(book)
 
       res.render('single-book', {
         book,
@@ -134,6 +134,7 @@ router.get('/login', (req, res) => {
   }
   res.render('login',{loggedIn: req.session.loggedIn});
 });
+
 
 
   module.exports = router;

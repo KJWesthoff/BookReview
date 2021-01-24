@@ -13,13 +13,13 @@
   
 </div>
 
-
-<div class="container" id="logophile_books_list">
 <h2>Books on Logophile</h2>
+<div class="container" id="logophile_books_list">
+
  {{#each books as |book|}}
 
 <div class="row mt-4"></div>
-   <div class="container"></div> 
+   <div class="container col align-self-center"></div> 
     
         {{> book-info book}}
         {{> comments book.comments}}
