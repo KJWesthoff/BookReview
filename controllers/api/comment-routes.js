@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Comment, Vote } = require('../../models');
+const { Comment, Vote, Book } = require('../../models');
 const tokenAuth = require("../../utils/auth");
 
 
@@ -61,15 +61,6 @@ router.get('/', (req, res) => {
   });
 
 
-  router.get('/votes', (req, res) => {
-    Vote.findAll()
-      .then(dbCommentData => res.json(dbCommentData))
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
-  });
-
 
 
   // Test the votes..
@@ -81,6 +72,48 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
       });
   });
+
+
+    // Test the votes by book no
+    router.get('/votes/:id', (req,res) =>{
+      
+      Vote.findAll({
+      attributes:['book_id', 'stars'],  
+      include:[
+        {
+          model:Book,
+          attributes:['id'],
+          required:true,
+          where:{id:req.params.id},
+        }
+
+      ]
+
+      })
+      .then(dbCommentData => {
+      
+        const votes = dbCommentData.map(vote => vote.get({plain:true}))
+        
+        let sum = 0;
+        let nVotes = 0;
+        for(vote of votes){
+          sum += vote.stars
+          nVotes ++
+        }
+
+        let avg = sum/nVotes;
+        
+        console.log(nVotes + " Votes, avg " + avg);
+
+        res.json({"votes":nVotes, "avg":avg})
+      
+      })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json(err);
+        });
+    });
+  
 
   module.exports = router;
   

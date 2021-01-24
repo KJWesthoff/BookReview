@@ -28,8 +28,9 @@ const tokenAuth = require("../utils/auth");
               required:true,
               include:[
                 {
-                  required:true,
-                  model:User,
+                  
+                 model:User,
+                  
                   attributes:['id','username'],
                   where:{id:req.session.user_id},
                  
@@ -46,8 +47,16 @@ const tokenAuth = require("../utils/auth");
       .then(dbPostData => {
         
         const books = dbPostData.map(book => book.get({plain:true}));
-        console.log(books)
         
+     
+
+        for(book of books){
+          console.log(book.votes[0].stars)
+          book.stars = book.votes[0].stars
+        }  
+
+        console.log(books)
+
         //res.json(dbPostData)
 
 
