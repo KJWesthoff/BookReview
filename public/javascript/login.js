@@ -1,7 +1,7 @@
 // Handler for the login option
 async function loginFormHandler(event) {
   
-  console.log("Login Client Side Function Running")
+  //console.log("Login Client Side Function Running")
   event.preventDefault();
 
   const email = document.querySelector('#email-login').value.trim();
@@ -49,7 +49,7 @@ async function signupFormHandler(event) {
   const email = document.querySelector('#email-signup').value.trim();
   const password = document.querySelector('#password-signup').value.trim();
   
-  console.log(username, email, password);
+  //console.log(username, email, password);
 
   // put the new user in the dm
 
@@ -115,7 +115,7 @@ async function checkFormHandler(event) {
     headers: {'authorization': 'Bearer ' + localStorage.getItem('savedAccessToken')}
   })
 
-  console.log(await response.json())
+  //console.log(await response.json())
   document.location.replace('/api/books/auth');
 
 }

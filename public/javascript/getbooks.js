@@ -3,6 +3,11 @@
 
 
 const bookSearchHandler = async function () {
+    // check if the user is loggedIn
+
+
+
+
 
     //Url for the google search books api
     var googleApiUrl = "https://www.googleapis.com/books/v1/volumes?q=";
@@ -90,7 +95,7 @@ const htmlCardifyBookdata = function(bookObj){
 
 
 const addBookToUser = async function (title, author, stars, img_url, book_url) {
-    
+ 
     
     //check if the book is already in the DB
     let inDB = await fetch('/api/books/title', {
@@ -123,10 +128,10 @@ const addBookToUser = async function (title, author, stars, img_url, book_url) {
       // then get the id of the   
       ret = await response.json();  
       id = ret.id;  
-      console.log("ID from new" , id)  
+      //console.log("ID from new" , id)  
     } else {
      id = nB[0].id
-     console.log("ID from OLD" , id)
+     //console.log("ID from OLD" , id)
     }
 
 
@@ -144,8 +149,13 @@ const addBookToUser = async function (title, author, stars, img_url, book_url) {
 }
 
 
-// Listen to the Stars.... 
+
 jQuery(document).ready(function($) {
+
+  // Book searc on google
+  $("body").on("click","#book-search", bookSearchHandler);
+
+  // Listen to the Stars.... 
   $('body').on('mouseover','.rating_stars span.r', function(event) {
     event.stopImmediatePropagation()
     
@@ -161,7 +171,8 @@ jQuery(document).ready(function($) {
     $(thiscard).find("rating_stars").attr('class', '').addClass('rating_stars').addClass('rating_'+rating);
     highlight_star(thiscard, rating);  
   });
-
+  
+  // Listen to the Stars and clicks on them.... 
   $('body').on('click','.rating_stars span.r', function(event) {
     event.stopImmediatePropagation()
     
@@ -174,31 +185,24 @@ jQuery(document).ready(function($) {
     var rating = $(this).data('rating');
     var value = $(this).data('value');
     
-    
-    
     // Add The Book to the User
     addBookToUser(title, author, value, img_url, book_url)
   
   });
 
 
-  var highlight_star = function(card, rating) {
-    $(card).find('.rating_stars span.s').each(function() {
-        var low = $(this).data('low');
-        var high = $(this).data('high');
-        $(this).removeClass('active-high').removeClass('active-low');
-        if (rating >= high) $(this).addClass('active-high');
-        else if (rating == low) $(this).addClass('active-low');
-    });
-  }
+ 
 
 });
           
+var highlight_star = function(card, rating) {
+  $(card).find('.rating_stars span.s').each(function() {
+      var low = $(this).data('low');
+      var high = $(this).data('high');
+      $(this).removeClass('active-high').removeClass('active-low');
+      if (rating >= high) $(this).addClass('active-high');
+      else if (rating == low) $(this).addClass('active-low');
+  });
+}
 
-$("body").on("click","#book-search", bookSearchHandler);
 
-//document.querySelector('#book-search').addEventListener('click', bookSearchHandler)
-//document.querySelector("#add-book-btn").addEventListener('click', addBookToUser)
-
-// jQuery used when the elements do not exist all the time
-//$("body").on("click","#add-book-btn", addBookToUser);

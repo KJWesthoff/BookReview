@@ -3,7 +3,8 @@
  {{#each books as |book|}}
 
 <div class="row mt-4"></div>
-   <div class="container"></div> 
+<div class="container col align-self-center"></div> 
+   
     
         {{> book-info book=book loggedIn=true}}
         {{> comments book.comments}}

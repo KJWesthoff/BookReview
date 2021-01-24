@@ -8,7 +8,7 @@ const tokenAuth = require("../utils/auth");
   // Make a combined query of Votes and comments for a given user
   router.get('/',tokenAuth, (req, res) => {
     
-    console.log(req.session.loggedIn)
+    //console.log(req.session.loggedIn)
     
     Book.findAll({
      
@@ -67,11 +67,11 @@ const tokenAuth = require("../utils/auth");
      
 
         for(book of books){
-          console.log(book.votes[0].stars)
+          //console.log(book.votes[0].stars)
           book.stars = book.votes[0].stars
         }  
 
-        console.log(books)
+        //console.log(books)
 
         //res.json(dbPostData)
 
@@ -88,4 +88,9 @@ const tokenAuth = require("../utils/auth");
       });
   });
   
+  // route the check if the user i logged in 
+  router.get('/checklogin', tokenAuth, (req,res) => {
+    res.json(true);
+  })  
+
   module.exports = router;
