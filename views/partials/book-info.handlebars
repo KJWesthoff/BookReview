@@ -11,14 +11,20 @@
             <a class="card-text" href="{{book_url}}" target="_blank">See it on Google</a>
             <p class="card-text author">Author: {{author}}</p>
           </div>
+          <div>This book has {{vote_count}} votes averaging {{vote_avg}} stars on Logophile</div>
+          {{#if loggedIn}}
             <p>You gave this book {{stars}} stars</p>
-            
+          {{/if}} 
             
         </div>
+        
+            {{#if loggedIn}}
             <div>
               <button class="comment_btn" >Add Comment</button>  
             </div>
+            {{/if}}
       </div>
     </div>
+    
   </div>
 </div>

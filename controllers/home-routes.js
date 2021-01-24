@@ -13,7 +13,10 @@ router.get('/', (req, res) => {
       'title',
       'author',
       'created_at',
-      [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE id = vote.book_id)'), 'vote_count']
+      'book_url',
+      'img_url',
+      [sequelize.literal('(SELECT COUNT(stars) FROM vote WHERE book.id = vote.book_id)'), 'vote_count'],
+        [sequelize.literal('(SELECT AVG(stars) FROM vote WHERE book.id= vote.book_id)'), 'vote_avg']
     ],
     order: [['created_at', 'DESC']],
     include: [
@@ -29,13 +32,36 @@ router.get('/', (req, res) => {
       {
         model: User,
         attributes: ['username']
+      },
+      {
+        model: Vote,
+        attributes:[
+          'user_id',
+          'stars',
+        
+        ],
+        include:[
+          {
+            
+           model:User,
+            
+            attributes:['id','username'],
+            
+           
+          }
+        ]
+
       }
+
+     
+
     ]
   })
     .then(dbPostData => {
 
       const books = dbPostData.map(book => book.get({ plain: true }));
-      console.log(books)
+      console.log(books.map(book => book.votes))
+
       console.log("Logged IN: ==========  ", req.session.loggedIn)
       res.render('homepage', {
         books,
