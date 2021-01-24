@@ -2,7 +2,7 @@
 <div class="input-group">
   <div class="form-outline">
     <input type="search" id="book-search-box" class="form-control" />
-    <label class="form-label" for="book-search-box">Search</label>
+    <label class="form-label" for="book-search-box">Search for new books on Google</label>
   </div>
   <button type="button" id="book-search" class="btn btn-primary">
     Search
@@ -10,6 +10,23 @@
 </div>
 
 <div class="container" id="google_books_list" >
+  
+</div>
+
+
+<div class="container" id="logophile_books_list">
+<h2>Books on Logophile</h2>
+ {{#each books as |book|}}
+
+<div class="row mt-4"></div>
+   <div class="container"></div> 
+    
+        {{> book-info book}}
+        {{> comments book.comments}}
+    
+    </div>
+</div>
+ {{/each}}
   
 </div>
 

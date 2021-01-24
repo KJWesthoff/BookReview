@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
   router.post('/', tokenAuth, (req, res) => {
     Comment.create({
       comment_text: req.body.comment_text,
-      user_id: req.body.user_id,
+      user_id: req.session.user_id,
       book_id: req.body.book_id
     })
       .then(dbCommentData => res.json(dbCommentData))
@@ -74,7 +74,7 @@ router.get('/', (req, res) => {
   });
 
 
-    // Test the votes by book no
+    // Test the av votes votes by book no
     router.get('/votes/:id', (req,res) =>{
       
       Vote.findAll({

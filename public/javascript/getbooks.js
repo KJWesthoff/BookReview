@@ -4,7 +4,7 @@
 
 const bookSearchHandler = async function () {
 
-    //Url for the google searc books api
+    //Url for the google search books api
     var googleApiUrl = "https://www.googleapis.com/books/v1/volumes?q=";
     
     // Capture a user search string and get the books using fetch
@@ -58,7 +58,7 @@ const htmlCardifyBookdata = function(bookObj){
             <a class="card-text" href="${bookObj.book_url}" target="_blank">See it on Google</a>
             <p class="card-text author">Author: ${bookObj.author}</p>
             
-          
+            <p class="">Click to star-rate and add to your books<p>
             <span class="rating_stars rating_0">
               <span class='s' data-low='0.5' data-high='1'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
               <span class='s' data-low='1.5' data-high='2'><i class="fa fa-star-o"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star"></i></span>
@@ -104,7 +104,8 @@ const addBookToUser = async function (title, author, stars, img_url, book_url) {
     // Clunky number of books check
     nB = await inDB.json()
     console.log(nB)
-
+    
+    
     if(nB.length == 0) {
       // If not add the book to the db
       const response = await fetch('/api/books/', {
