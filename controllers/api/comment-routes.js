@@ -44,6 +44,33 @@ router.get('/', (req, res) => {
       });
   });
   
+  router.post('/vote', tokenAuth, (req, res) => {
+    voteObj = {
+      stars: req.body.stars,
+      user_id: req.session.user_id,
+      book_id: req.body.book_id
+    }
+    console.log("VOTEOBJ ======================", voteObj);
+
+    Vote.create(voteObj)
+      .then(dbVoteData => res.json(dbVoteData))
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  });
+
+
+  router.get('/votes', (req, res) => {
+    Vote.findAll()
+      .then(dbCommentData => res.json(dbCommentData))
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
+
 
   // Test the votes..
   router.get('/votes', (req,res) =>{

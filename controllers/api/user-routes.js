@@ -75,9 +75,12 @@ router.post('/', (req, res) => {
         user_email: dbUserData.email
       }
 
-      req.session.save(() => {
-        req.session.loggedIn = true;
-      });
+      
+      // set session cookie  as logged in
+      req.session.loggedIn = true
+      req.session.user_id =  dbUserData.id
+      req.session.username =  dbUserData.username
+      
 
 
       // Generate a jsonwebtoken with userdata as payload
@@ -85,15 +88,7 @@ router.post('/', (req, res) => {
 
       res.json({ message: 'You are now added as user!', accessToken: accessToken });
 
-      /*  // cookie version
-      req.session.save(() => {
-          req.session.user_id = dbUserData.id;
-          req.session.username = dbUserData.username;
-          req.session.loggedIn = true;
-      
-          res.json(dbUserData);
-      });
-      */
+   
     })
     .catch(err => {
       console.log(err);
@@ -139,21 +134,12 @@ router.post('/login', (req, res) => {
     
     // set session cookie  as logged in
     req.session.loggedIn = true
-    //req.session.save(() => {
-    //  req.session.loggedIn = true;
-    //});
+    req.session.user_id =  dbUserData.id
+    req.session.username =  dbUserData.username
+    
 
-
-    // cookie version
-    //
-    //  req.session.user_id = dbUserData.id;
-    //  req.session.username = dbUserData.username;
-    //  req.session.loggedIn = true;
-    //res.redirect('/');
-    //});
 
     // Return the webtoken to client
-
     res.json({ message: 'You are now logged in!', accessToken: accessToken });
 
 

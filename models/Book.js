@@ -1,7 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 // create our Book model
-class Book extends Model {
+class Book extends Model {}
+/*
   static upvote(body, models) {
     return models.Vote.create({
       user_id: body.user_id,
@@ -13,7 +14,8 @@ class Book extends Model {
         },
         attributes: [
           'id',
-        //   'book_url',
+          'book_url',
+          'img_url',
           'title',
           'author',
           'created_at',
@@ -36,7 +38,7 @@ class Book extends Model {
     });
   }
 }
-
+*/
 
 // create fields/columns for Book model
 Book.init(
@@ -55,13 +57,20 @@ Book.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // book_url: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   validate: {
-    //     isURL: true
-    //   }
-    // },
+     book_url: {
+       type: DataTypes.STRING,
+       allowNull: true,
+       validate: {
+         isURL: true
+       }
+    },
+    img_url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isURL: true
+      }
+   },
     user_id: {
       type: DataTypes.INTEGER,
       references: {

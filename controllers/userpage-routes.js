@@ -4,7 +4,7 @@ const sequelize = require('../config/connection');
 const { Book, User, Comment, Vote } = require('../models');
 const tokenAuth = require("../utils/auth");
 
-// Get all the users books
+// Get all the users books by Vote
   // Make a combined query of Votes and comments for a given user
   router.get('/',tokenAuth, (req, res) => {
     
@@ -17,31 +17,29 @@ const tokenAuth = require("../utils/auth");
           'title',
           'author',
           'created_at',
+          'book_url',
+          'img_url',
         ],
         order: [['created_at', 'DESC']],
-        
         include: [
-          {
-            model:User,
-            attributes:['id', 'username'],
-            include: [
-              {
-                model: Comment,
-                attributes: ['comment_text', 'user_id'],
-                //where:{user_id:req.user_id},
-              },
-              {
-                model: Vote,
-                attributes:['user_id'],
-                //where:{user_id:req.user_id},  
-              }, 
-             
-            ],
-            where:{id:req.user_id}
-            
-          },
-        ]
-          
+            {
+              model: Vote,
+              attributes:['user_id','stars'],
+              required:true,
+              include:[
+                {
+                  required:true,
+                  model:User,
+                  attributes:['id','username'],
+                  where:{id:req.session.user_id},
+                 
+                }
+              ]
+
+            },
+
+        ],
+           
       })    
         
         
@@ -50,9 +48,12 @@ const tokenAuth = require("../utils/auth");
         const books = dbPostData.map(book => book.get({plain:true}));
         console.log(books)
         
+        //res.json(dbPostData)
+
+
         res.render('userpage', {
           books:books,
-          user:req.username,
+          user:req.session.username,
           loggedIn:req.session.loggedIn
         });
       })
