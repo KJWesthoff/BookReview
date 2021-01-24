@@ -4,7 +4,7 @@
 
 const bookSearchHandler = async function () {
 
-    //Url for the google searc books api
+    //Url for the google search books api
     var googleApiUrl = "https://www.googleapis.com/books/v1/volumes?q=";
     
     // Capture a user search string and get the books using fetch

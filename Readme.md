@@ -30,12 +30,20 @@
 
 
   ## Project Description:
-  It is a site for book reviews
+  It is a site for book reviews, the user can log in, find books and rate them with stars.
+
   ## Installation Instructions:
   find it here: https://damp-ocean-64357.herokuapp.com/
   ## How To Use
   Log in and go book-bonanza
   ## How to Contribute:
+
+  ### Features to be added
+  * Currently the token authentication is "for life" (unless you log out) an expiration time should be added and a second refresh token scheme could be added so user rights can be revoked or upgraded.
+  * Comment section for user reviews to be added
+  * User votes vs average vote for each book to be presented on the front page etc.
+
+  ### General 
   * Suggestions and bug reports are very welcome
   * Checkout the github repo and please raise any issues with LogoPhile you come across 
   * Even better - help with bugfixes and features by submitting your solutions in pull requrets for the repo

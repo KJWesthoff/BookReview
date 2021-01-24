@@ -1,4 +1,4 @@
-{{> book-info book}}
+{{> book-info_reduced book}}
 
 {{#if loggedIn}}
 <form class="comment-form">
@@ -7,15 +7,9 @@
   </div>
 
   <div>
-    <button type="submit">add comment</button>
-    <button type="button" class="upvote-btn">upvote</button>
+    <button class="submit_comment" type="submit">add comment</button>
   </div>
 </form>
 {{/if}}
 
 {{> comments book.comments}}
-
-{{#if loggedIn}}
-<script src="/javascript/comment.js"></script>
-<script src="/javascript/upvote.js"></script>
-{{/if}}
