@@ -129,7 +129,7 @@ const addBookToUser = async function (title, author, stars, img_url, book_url) {
     }
 
 
-    
+
     const castVote = await fetch('/api/comments/vote', {
       method:'post',
       body:JSON.stringify({
@@ -160,7 +160,7 @@ jQuery(document).ready(function($) {
     var value = $(this).data('value');
     
     $(thiscard).find("rating_stars").attr('class', '').addClass('rating_stars').addClass('rating_'+rating);
-    highlight_star(thiscard, value);  
+    highlight_star(thiscard, rating);  
   });
 
   $('body').on('click','.rating_stars span.r', function(event) {
